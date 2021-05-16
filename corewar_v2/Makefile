@@ -29,7 +29,7 @@ SRCS += op.c
 SRCS := $(addprefix srcs/, $(SRCS))
 
 SRCS2 = asm.c init.c read.c lexer.c parser.c content.c type.c check.c strip.c \
-	    line.c label.c write.c print.c destroy.c terminate.c error.c
+	    line.c label.c write.c print.c destroy.c terminate.c error.c error2.c
 SRCS2 := $(addprefix asm/, $(SRCS2))
 SRCS2 += op.c
 SRCS2 := $(addprefix srcs/, $(SRCS2))
