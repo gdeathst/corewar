@@ -95,5 +95,6 @@ void			annotated_output(t_exec *info);
 void			destroy_struct(t_exec *info);
 void			terminate(t_exec *info, int status, void *ptr);
 void			print_error(t_exec *info, int status, void *ptr);
+void			print_syntax_error2(int status, t_tok *token);
 
 #endif

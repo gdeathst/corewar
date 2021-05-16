@@ -203,5 +203,6 @@ void						op_lfork(t_carriage *carriage,
 								t_game_params *params, int arg_code);
 void						op_aff(t_carriage *carriage, t_game_params *params,
 								int arg_code);
+void						get_fd(int *fd, t_game_params *p, int i);
 
 #endif

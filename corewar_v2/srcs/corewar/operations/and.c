@@ -44,5 +44,5 @@ void	op_and(t_carriage *carriage, t_game_params *params, int arg_code)
 	if (type[1] == REG_CODE)
 		args[1] = get_registry(carriage, args[1]);
 	save_registry(carriage, args[2], args[0] & args[1]);
-	cariiage->carry = help_op_and(args[1], args[0]);
+	carriage->carry = help_op_and(args[1], args[0]);
 }

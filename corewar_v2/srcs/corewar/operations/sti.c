@@ -30,7 +30,7 @@ static int	check_reg_index(int *args, int *type)
 	return (0);
 }
 
-static void	help_sti(char *arena, int cur_position, int *args)
+static void	help_op_sti(char *arena, int cur_position, int *args)
 {
 	write_number(arena, cur_position + ((args[1] + args[2]) % IDX_MOD),
 		REG_SIZE, args[0]);
@@ -45,7 +45,7 @@ void	op_sti(t_carriage *carriage, t_game_params *params, int arg_code)
 	i = -1;
 	while (++i < 3)
 	{
-		type[i] = arg_code >> (8 - (i + 1) * 2) & 3);
+		type[i] = arg_code >> (8 - (i + 1) * 2) & 3;
 		if (type[i] == REG_CODE)
 			args[i] = get_address_argument(params->arena, carriage, type[i], 0);
 		else

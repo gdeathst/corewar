@@ -67,7 +67,7 @@ int	get_address_argument(char *arena, t_carriage *carriage, int arg_type,
 	if (arg_type == IND_CODE)
 	{
 		num = read_number(arena, position, IND_SIZE);
-		if (!_op)
+		if (!l_op)
 			num = num % 16;
 	}
 	if (arg_type == REG_CODE)
