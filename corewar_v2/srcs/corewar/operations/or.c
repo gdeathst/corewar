@@ -6,7 +6,7 @@
 /*   By: anonymous <anonymous@student.42.fr>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/07/15 22:32:30 by bgilwood          #+#    #+#             */
-/*   Updated: 2021/05/16 16:41:53 by anonymous        ###   ########.fr       */
+/*   Updated: 2021/05/16 18:13:31 by anonymous        ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -28,7 +28,7 @@ void	op_or(t_carriage *carriage, t_game_params *params, int arg_code)
 	i = 0;
 	while (i < 3)
 	{
-		type[i] = arg_code >> (8 - (i + 1) * 2) & 3);
+		type[i] = arg_code >> (8 - (i + 1) * 2) & 3;
 		if (type[i] == REG_CODE)
 			args[i] = get_address_argument(params->arena, carriage, type[i], 0);
 		else

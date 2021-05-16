@@ -6,7 +6,7 @@
 /*   By: anonymous <anonymous@student.42.fr>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/07/15 23:30:21 by bgilwood          #+#    #+#             */
-/*   Updated: 2021/05/16 17:42:05 by anonymous        ###   ########.fr       */
+/*   Updated: 2021/05/16 18:12:55 by anonymous        ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -30,7 +30,7 @@ static int	check_reg_index(int *args, int *type)
 	return (0);
 }
 
-static void	halp_sti(char *arena, int cur_position, int *args)
+static void	help_sti(char *arena, int cur_position, int *args)
 {
 	write_number(arena, cur_position + ((args[1] + args[2]) % IDX_MOD),
 		REG_SIZE, args[0]);
