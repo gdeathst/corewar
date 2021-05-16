@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   op.h                                               :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: zaz <marvin@42.fr>                         +#+  +:+       +#+        */
+/*   By: anonymous <anonymous@student.42.fr>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2013/10/04 11:33:27 by zaz               #+#    #+#             */
-/*   Updated: 2020/03/11 16:57:49 by aromny-w         ###   ########.fr       */
+/*   Updated: 2021/05/16 12:39:39 by anonymous        ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -30,9 +30,9 @@
 
 # define MAX_ARGS_NUMBER 4
 # define MAX_PLAYERS 4
-# define MEM_SIZE (4 * 1024)
-# define IDX_MOD (MEM_SIZE / 8)
-# define CHAMP_MAX_SIZE (MEM_SIZE / 6)
+# define MEM_SIZE 4096
+# define IDX_MOD 512
+# define CHAMP_MAX_SIZE 682
 
 # define COMMAND_CHAR '.'
 # define COMMENT_CHAR '#'
@@ -66,7 +66,7 @@ typedef char	t_arg_type;
 # define T_IND 4
 # define T_LAB 8
 
-typedef struct		s_op
+typedef struct s_op
 {
 	char		*name;
 	int			params;
@@ -78,7 +78,7 @@ typedef struct		s_op
 	bool		idx;
 }					t_op;
 
-extern t_op	g_op_tab[];
+extern t_op		g_op_tab[];
 
 /*
 ** Sample Text
@@ -88,7 +88,7 @@ extern t_op	g_op_tab[];
 # define COMMENT_LENGTH (2048)
 # define COREWAR_EXEC_MAGIC 0xea83f3
 
-typedef struct		s_header
+typedef struct s_header
 {
 	unsigned int	magic;
 	char			prog_name[PROG_NAME_LENGTH + 1];

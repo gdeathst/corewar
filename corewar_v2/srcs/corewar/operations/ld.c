@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   ld.c                                               :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: bgilwood <bgilwood@student.42.fr>          +#+  +:+       +#+        */
+/*   By: anonymous <anonymous@student.42.fr>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/06/17 21:15:04 by bgilwood          #+#    #+#             */
-/*   Updated: 2020/07/16 22:32:16 by bgilwood         ###   ########.fr       */
+/*   Updated: 2021/05/16 12:52:58 by anonymous        ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,5 +21,8 @@ void	op_ld(t_carriage *carriage, t_game_params *params, int arg_code)
 	if (!(args[1] > 0 && args[1] <= REG_NUMBER))
 		return ;
 	save_registry(carriage, args[1], args[0]);
-	carriage->carry = args[0] ? 0 : 1;
+	if (args[0])
+		carriage->carry = 0;
+	else
+		carriage->carry = 1;
 }

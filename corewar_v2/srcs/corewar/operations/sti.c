@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   sti.c                                              :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: bgilwood <bgilwood@student.42.fr>          +#+  +:+       +#+        */
+/*   By: anonymous <anonymous@student.42.fr>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/07/15 23:30:21 by bgilwood          #+#    #+#             */
-/*   Updated: 2020/07/16 22:33:36 by bgilwood         ###   ########.fr       */
+/*   Updated: 2021/05/16 17:42:05 by anonymous        ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -23,14 +23,20 @@ static void	write_color(int *color, int position, int size_bytes, int owner)
 
 static int	check_reg_index(int *args, int *type)
 {
-	if ((type[0] == REG_CODE && !(args[0] > 0 && args[0] <= REG_NUMBER)) ||
-	(type[1] == REG_CODE && !(args[1] > 0 && args[1] <= REG_NUMBER)) ||
-	(type[2] == REG_CODE && !(args[2] > 0 && args[2] <= REG_NUMBER)))
+	if ((type[0] == REG_CODE && !(args[0] > 0 && args[0] <= REG_NUMBER))
+		|| (type[1] == REG_CODE && !(args[1] > 0 && args[1] <= REG_NUMBER))
+		|| (type[2] == REG_CODE && !(args[2] > 0 && args[2] <= REG_NUMBER)))
 		return (1);
 	return (0);
 }
 
-void		op_sti(t_carriage *carriage, t_game_params *params, int arg_code)
+static void	halp_sti(char *arena, int cur_position, int *args)
+{
+	write_number(arena, cur_position + ((args[1] + args[2]) % IDX_MOD),
+		REG_SIZE, args[0]);
+}
+
+void	op_sti(t_carriage *carriage, t_game_params *params, int arg_code)
 {
 	int	args[3];
 	int	type[3];
@@ -39,7 +45,8 @@ void		op_sti(t_carriage *carriage, t_game_params *params, int arg_code)
 	i = -1;
 	while (++i < 3)
 	{
-		if ((type[i] = arg_code >> (8 - (i + 1) * 2) & 3) == REG_CODE)
+		type[i] = arg_code >> (8 - (i + 1) * 2) & 3);
+		if (type[i] == REG_CODE)
 			args[i] = get_address_argument(params->arena, carriage, type[i], 0);
 		else
 			args[i] = get_argument(params->arena, carriage, type[i], 0);
@@ -52,9 +59,8 @@ void		op_sti(t_carriage *carriage, t_game_params *params, int arg_code)
 		args[1] = get_registry(carriage, args[1]);
 	if (type[2] == REG_CODE)
 		args[2] = get_registry(carriage, args[2]);
-	write_number(params->arena, carriage->cur_position +
-				((args[1] + args[2]) % IDX_MOD), REG_SIZE, args[0]);
+	help_op_sti(params->arena, carriage->cur_position, args);
 	if (params->v_flag_on)
-		write_color(params->visu->color, carriage->cur_position +
-		((args[1] + args[2]) % IDX_MOD), REG_SIZE, carriage->owner);
+		write_color(params->visu->color, carriage->cur_position
+			+ ((args[1] + args[2]) % IDX_MOD), REG_SIZE, carriage->owner);
 }

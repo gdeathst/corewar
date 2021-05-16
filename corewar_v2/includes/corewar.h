@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   corewar.h                                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: bgilwood <bgilwood@student.42.fr>          +#+  +:+       +#+        */
+/*   By: anonymous <anonymous@student.42.fr>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/04/05 23:55:40 by bgilwood          #+#    #+#             */
-/*   Updated: 2020/08/09 18:19:10 by bgilwood         ###   ########.fr       */
+/*   Updated: 2021/05/16 12:35:51 by anonymous        ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -29,7 +29,7 @@
 # define AQUA_COLOR 0x00ffff
 # define LIGHT_GREY_COLOR 0xd3d3d3
 
-typedef struct				s_mlx
+typedef struct s_mlx
 {
 	int		width;
 	int		height;
@@ -43,7 +43,7 @@ typedef struct				s_mlx
 	int		color[MEM_SIZE];
 }							t_mlx;
 
-typedef struct				s_player
+typedef struct s_player
 {
 	int						id;
 	char					*name;
@@ -54,7 +54,7 @@ typedef struct				s_player
 	struct s_player			*next;
 }							t_player;
 
-typedef struct				s_carriage
+typedef struct s_carriage
 {
 	int						id;
 	int						owner;
@@ -67,13 +67,13 @@ typedef struct				s_carriage
 	int						registries[REG_NUMBER];
 }							t_carriage;
 
-typedef struct				s_car_list_elem
+typedef struct s_car_list_elem
 {
 	t_carriage				*content;
 	struct s_car_list_elem	*next;
 }							t_car_list_elem;
 
-typedef struct				s_game_params
+typedef struct s_game_params
 {
 	int						last_alive;
 	ssize_t					cycles_since_start;
@@ -93,7 +93,7 @@ typedef struct				s_game_params
 	t_mlx					*visu;
 }							t_game_params;
 
-extern void (*g_execs[])(t_carriage*, t_game_params*, int);
+extern	void	((*g_execs[])(t_carriage*, t_game_params*, int));
 
 void						add_carriage_elem(t_car_list_elem **head,
 								int car_position, int player_id, int id);
@@ -127,15 +127,15 @@ void						announce_player_alive(t_game_params *params,
 void						announce_players(t_player **players);
 void						announce_winner(t_game_params *params);
 void						dump_memory(t_game_params *params);
-void						print_memory_error();
+void						print_memory_error(void);
 
 void						*arena_init(void);
 t_car_list_elem				*place_players(t_player **players, char *arena);
 void						delete_all_players(t_player **players);
 void						dump_mem_and_exit(t_game_params *params,
-									t_car_list_elem *carriages);
+								t_car_list_elem *carriages);
 void						game_over(t_game_params *params,
-									t_car_list_elem *carriages);
+								t_car_list_elem *carriages);
 
 t_game_params				*init_game_params(void);
 t_player					*init_player(char *filename, int num);
@@ -143,20 +143,20 @@ t_mlx						*init_visu(t_game_params *params);
 void						init_ops(void);
 void						get_args(int ac, char **av, t_game_params *params);
 void						sort_players(t_game_params *prms,
-											t_player **lst, char **av);
+								t_player **lst, char **av);
 void						validate_players(t_game_params *prms);
 void						play_game(t_game_params *params);
 void						play_cycle(t_game_params *params);
 void						exec_op(t_carriage *carriage,
-									t_game_params *params);
+								t_game_params *params);
 int							fill_reg_arg(int *arg, char *arena,
-									t_carriage *carriage);
+								t_carriage *carriage);
 void						visualise(t_game_params *params);
 int							get_color(int id);
 void						draw_arena(t_game_params *params);
 
 int							get_argument(char *arena, t_carriage *carriage,
-										int arg_type, int l_op);
+								int arg_type, int l_op);
 int							get_address_argument(char *arena,
 								t_carriage *carriage, int arg_type, int l_op);
 void						print_usage(char *exec);
@@ -203,6 +203,5 @@ void						op_lfork(t_carriage *carriage,
 								t_game_params *params, int arg_code);
 void						op_aff(t_carriage *carriage, t_game_params *params,
 								int arg_code);
-void						get_fd(int *fd, t_game_params *p, int i);
 
 #endif

@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   visu.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: aromny-w <marvin@42.fr>                    +#+  +:+       +#+        */
+/*   By: anonymous <anonymous@student.42.fr>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/08/19 11:21:45 by aromny-w          #+#    #+#             */
-/*   Updated: 2020/08/19 11:21:46 by aromny-w         ###   ########.fr       */
+/*   Updated: 2021/05/16 12:41:08 by anonymous        ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -38,10 +38,10 @@ static int	visu_hook(t_game_params *params)
 		mlx_clear_window(params->visu->mlx_ptr, params->visu->win_ptr);
 		winner = params->players[params->last_alive - 1]->name;
 		offset = (ft_strlen(winner) * 10) / 2;
-		mlx_string_put(params->visu->mlx_ptr, params->visu->win_ptr, 800 -
-		offset, 640, get_color(params->last_alive), winner);
+		mlx_string_put(params->visu->mlx_ptr, params->visu->win_ptr, 800
+			- offset, 640, get_color(params->last_alive), winner);
 		mlx_string_put(params->visu->mlx_ptr, params->visu->win_ptr,
-		800 + offset, 640, get_color(params->last_alive), " has won!");
+			800 + offset, 640, get_color(params->last_alive), " has won!");
 	}
 	return (0);
 }
@@ -53,7 +53,7 @@ static int	exit_key(int key, t_game_params *params)
 	return (1);
 }
 
-int			get_color(int id)
+int	get_color(int id)
 {
 	if (id == 1)
 		return (GREEN_COLOR);
@@ -66,7 +66,7 @@ int			get_color(int id)
 	return (0);
 }
 
-void		visualise(t_game_params *params)
+void	visualise(t_game_params *params)
 {
 	params->visu = init_visu(params);
 	mlx_key_hook(params->visu->win_ptr, exit_key, params);

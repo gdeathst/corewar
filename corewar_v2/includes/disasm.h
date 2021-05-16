@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   disasm.h                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: aromny-w <marvin@42.fr>                    +#+  +:+       +#+        */
+/*   By: anonymous <anonymous@student.42.fr>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/08/03 18:05:05 by malannys          #+#    #+#             */
-/*   Updated: 2020/08/03 18:05:10 by malannys         ###   ########.fr       */
+/*   Updated: 2021/05/16 12:36:18 by anonymous        ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -27,7 +27,7 @@
 # define RESET_COLOR "\e[m"
 # define RED "\033[4;31m"
 
-typedef struct		s_instruction
+typedef struct s_instruction
 {
 	t_op					op;
 	t_arg_type				arg_type[MAX_ARGS_NUMBER];
@@ -35,7 +35,7 @@ typedef struct		s_instruction
 	struct s_instruction	*next;
 }					t_instruction;
 
-typedef struct		s_bin
+typedef struct s_bin
 {
 	char					*filename;
 	char					*prog_name;

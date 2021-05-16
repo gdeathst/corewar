@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   asm.h                                              :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: aromny-w <aromny-w@student.21-school.ru>   +#+  +:+       +#+        */
+/*   By: anonymous <anonymous@student.42.fr>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/12/22 17:03:06 by aromny-w          #+#    #+#             */
-/*   Updated: 2020/04/01 22:12:17 by aromny-w         ###   ########.fr       */
+/*   Updated: 2021/05/16 12:32:41 by anonymous        ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,7 +19,7 @@
 # include "libft.h"
 # include "op.h"
 
-typedef enum
+typedef enum e_type
 {
 	COMMAND_NAME,
 	COMMAND_COMMENT,
@@ -38,7 +38,7 @@ typedef enum
 	WHITESPACE
 }	t_type;
 
-typedef struct	s_tok
+typedef struct s_tok
 {
 	char			*content;
 	t_type			type;
@@ -47,7 +47,7 @@ typedef struct	s_tok
 	struct s_tok	*next;
 }				t_tok;
 
-typedef struct	s_arg
+typedef struct s_arg
 {
 	t_tok		*token;
 	char		*ref;
@@ -56,7 +56,7 @@ typedef struct	s_arg
 	int			size;
 }				t_arg;
 
-typedef struct	s_line
+typedef struct s_line
 {
 	t_tok			*label;
 	t_op			op;
@@ -67,7 +67,7 @@ typedef struct	s_line
 	struct s_line	*next;
 }				t_line;
 
-typedef struct	s_exec
+typedef struct s_exec
 {
 	char		*path;
 	char		*filename;
@@ -95,6 +95,5 @@ void			annotated_output(t_exec *info);
 void			destroy_struct(t_exec *info);
 void			terminate(t_exec *info, int status, void *ptr);
 void			print_error(t_exec *info, int status, void *ptr);
-void			print_syntax_error2(int status, t_tok *token);
 
 #endif
