@@ -1,15 +1,3 @@
-/* ************************************************************************** */
-/*                                                                            */
-/*                                                        :::      ::::::::   */
-/*   ft_strsplit.c                                      :+:      :+:    :+:   */
-/*                                                    +:+ +:+         +:+     */
-/*   By: aromny-w <marvin@42.fr>                    +#+  +:+       +#+        */
-/*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2018/12/08 18:20:04 by aromny-w          #+#    #+#             */
-/*   Updated: 2018/12/08 18:20:10 by aromny-w         ###   ########.fr       */
-/*                                                                            */
-/* ************************************************************************** */
-
 #include "libft.h"
 
 static size_t	get_wcount(const char *s, char c)
@@ -39,7 +27,7 @@ static size_t	get_wlen(const char *s, char c)
 	return (len);
 }
 
-static char		**del(char **tab, size_t i)
+static char	**del(char **tab, size_t i)
 {
 	while (i--)
 		free(tab[i]);
@@ -47,13 +35,14 @@ static char		**del(char **tab, size_t i)
 	return (NULL);
 }
 
-char			**ft_strsplit(char const *s, char c)
+char	**ft_strsplit(char const *s, char c)
 {
 	char	**tab;
 	size_t	i;
 	size_t	j;
 
-	if (!(tab = (char **)malloc(sizeof(char *) * (get_wcount(s, c) + 1))))
+	tab = (char **)malloc(sizeof(char *) * (get_wcount(s, c) + 1));
+	if (!tab)
 		return (NULL);
 	i = 0;
 	while (*s)
@@ -62,7 +51,8 @@ char			**ft_strsplit(char const *s, char c)
 			s++;
 		if (*s)
 		{
-			if (!(tab[i] = (char *)malloc(sizeof(char) * (get_wlen(s, c) + 1))))
+			tab[i] = (char *)malloc(sizeof(char) * (get_wlen(s, c) + 1));
+			if (!(tab[i]))
 				return (del(tab, i));
 			j = 0;
 			while (*s && *s != c)

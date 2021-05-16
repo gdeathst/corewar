@@ -1,15 +1,3 @@
-/* ************************************************************************** */
-/*                                                                            */
-/*                                                        :::      ::::::::   */
-/*   ft_atoi.c                                          :+:      :+:    :+:   */
-/*                                                    +:+ +:+         +:+     */
-/*   By: aromny-w <marvin@42.fr>                    +#+  +:+       +#+        */
-/*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2018/12/02 00:19:44 by aromny-w          #+#    #+#             */
-/*   Updated: 2018/12/16 18:32:39 by aromny-w         ###   ########.fr       */
-/*                                                                            */
-/* ************************************************************************** */
-
 #include "libft.h"
 
 int	ft_atoi(const char *str)
@@ -27,7 +15,12 @@ int	ft_atoi(const char *str)
 	while (ft_isdigit(*str))
 	{
 		if (n != n * 10 / 10)
-			return ((int)(sign == 1 ? LONG_MAX : LONG_MIN));
+		{
+			if (sign == 1)
+				return ((int)LONG_MAX);
+			else
+				return ((int)LONG_MIN);
+		}
 		n = 10 * n + (*str++ - '0');
 	}
 	return (n * sign);
