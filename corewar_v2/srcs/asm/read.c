@@ -1,15 +1,3 @@
-/* ************************************************************************** */
-/*                                                                            */
-/*                                                        :::      ::::::::   */
-/*   read.c                                             :+:      :+:    :+:   */
-/*                                                    +:+ +:+         +:+     */
-/*   By: aromny-w <aromny-w@student.21-school.ru>   +#+  +:+       +#+        */
-/*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2019/12/22 20:45:38 by aromny-w          #+#    #+#             */
-/*   Updated: 2020/04/05 01:18:43 by aromny-w         ###   ########.fr       */
-/*                                                                            */
-/* ************************************************************************** */
-
 #include "asm.h"
 
 static char	*get_buffer(t_exec *info, int fd)
@@ -18,16 +6,20 @@ static char	*get_buffer(t_exec *info, int fd)
 	int		i;
 
 	i = -1;
-	if (!(buf = (char *)malloc(sizeof(char) * (++i + 1))))
+	buf = (char *)malloc(sizeof(char) * (++i + 1));
+	if (!buf)
 		terminate(info, 0, NULL);
 	while (read(fd, &buf[i], 1) == 1)
-		if (!(buf = (char *)ft_reallocf(buf, sizeof(char) * (++i + 1))))
+	{
+		buf = (char *)ft_reallocf(buf, sizeof(char) * (++i + 1));
+		if (!buf)
 			terminate(info, 0, NULL);
+	}
 	buf[i] = '\0';
 	return (buf);
 }
 
-void		get_file_contents(t_exec *info)
+void	get_file_contents(t_exec *info)
 {
 	int	fd;
 

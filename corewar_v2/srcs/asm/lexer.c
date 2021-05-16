@@ -1,15 +1,3 @@
-/* ************************************************************************** */
-/*                                                                            */
-/*                                                        :::      ::::::::   */
-/*   lexer.c                                            :+:      :+:    :+:   */
-/*                                                    +:+ +:+         +:+     */
-/*   By: aromny-w <aromny-w@student.21-school.ru>   +#+  +:+       +#+        */
-/*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2020/02/19 17:22:33 by aromny-w          #+#    #+#             */
-/*   Updated: 2020/04/03 16:34:23 by aromny-w         ###   ########.fr       */
-/*                                                                            */
-/* ************************************************************************** */
-
 #include "asm.h"
 
 static void	reverse_tokens(t_tok **token)
@@ -64,19 +52,24 @@ static void	add_new_token(t_exec *info, char *s)
 {
 	t_tok	*new;
 
-	if (!(new = (t_tok *)ft_memalloc(sizeof(t_tok))))
+	new = (t_tok *)ft_memalloc(sizeof(t_tok));
+	if (!(new))
 		terminate(info, 0, NULL);
 	new->row = get_token_row(info->buf, s);
 	new->col = get_token_col(info->buf, s);
 	new->next = info->token;
 	info->token = new;
 	lexical_check(info, s);
-	if (*s && !(new->content = get_token_content(s)))
-		terminate(info, 0, NULL);
+	if (*s)
+	{
+		new->content = get_token_content(s);
+		if (!(new->content))
+			terminate(info, 0, NULL);
+	}
 	new->type = get_token_type(new->content);
 }
 
-void		lex_corewar(t_exec *info)
+void	lex_corewar(t_exec *info)
 {
 	int	i;
 

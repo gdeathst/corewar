@@ -1,15 +1,3 @@
-/* ************************************************************************** */
-/*                                                                            */
-/*                                                        :::      ::::::::   */
-/*   write.c                                            :+:      :+:    :+:   */
-/*                                                    +:+ +:+         +:+     */
-/*   By: aromny-w <aromny-w@student.21-school.ru>   +#+  +:+       +#+        */
-/*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2020/04/20 17:48:44 by aromny-w          #+#    #+#             */
-/*   Updated: 2020/04/20 17:48:47 by aromny-w         ###   ########.fr       */
-/*                                                                            */
-/* ************************************************************************** */
-
 #include "asm.h"
 
 static void	write_number(int fd, int n, size_t size)
@@ -53,7 +41,7 @@ static void	write_header(t_header header, int fd)
 	write_number(fd, 0, sizeof(int));
 }
 
-void		bytecode_output(t_exec *info)
+void	bytecode_output(t_exec *info)
 {
 	t_line	*lptr;
 	int		fd;

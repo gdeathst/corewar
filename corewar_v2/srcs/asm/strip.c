@@ -1,15 +1,3 @@
-/* ************************************************************************** */
-/*                                                                            */
-/*                                                        :::      ::::::::   */
-/*   strip.c                                            :+:      :+:    :+:   */
-/*                                                    +:+ +:+         +:+     */
-/*   By: aromny-w <aromny-w@student.21-school.ru>   +#+  +:+       +#+        */
-/*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2020/05/06 19:34:46 by aromny-w          #+#    #+#             */
-/*   Updated: 2020/05/06 19:34:47 by aromny-w         ###   ########.fr       */
-/*                                                                            */
-/* ************************************************************************** */
-
 #include "asm.h"
 
 static void	strip_two_endlines(t_exec *info)
@@ -17,13 +5,15 @@ static void	strip_two_endlines(t_exec *info)
 	t_tok	*tptr;
 	t_tok	*next;
 
-	while ((tptr = info->token)->type == ENDLINE)
+	tptr = info->token;
+	while (tptr->type == ENDLINE)
 	{
 		info->token = info->token->next;
 		free(tptr->content);
 		free(tptr);
 	}
-	while ((next = tptr->next) && next->next)
+	next = tptr->next;
+	while (next->type && next->next)
 	{
 		if (next->type == ENDLINE && next->next->type == ENDLINE)
 		{
@@ -33,6 +23,7 @@ static void	strip_two_endlines(t_exec *info)
 		}
 		else
 			tptr = tptr->next;
+		next = tptr->next;
 	}
 }
 
@@ -41,13 +32,16 @@ static void	strip_whitespace(t_exec *info)
 	t_tok	*tptr;
 	t_tok	*next;
 
-	while ((tptr = info->token)->type == WHITESPACE)
+	tptr = info->token;
+	while (tptr->type == WHITESPACE)
 	{
 		info->token = info->token->next;
 		free(tptr->content);
 		free(tptr);
+		tptr = info->token;
 	}
-	while ((next = tptr->next))
+	next = tptr->next;
+	while (next)
 	{
 		if (next->type == WHITESPACE)
 		{
@@ -57,6 +51,7 @@ static void	strip_whitespace(t_exec *info)
 		}
 		else
 			tptr = tptr->next;
+		next = tptr->next;
 	}
 }
 
@@ -65,13 +60,15 @@ static void	strip_comments(t_exec *info)
 	t_tok	*tptr;
 	t_tok	*next;
 
-	while ((tptr = info->token)->type == COMMENT)
+	tptr = info->token;
+	while (tptr->type == COMMENT)
 	{
 		info->token = info->token->next;
 		free(tptr->content);
 		free(tptr);
 	}
-	while ((next = tptr->next))
+	next = tptr->next;
+	while (next)
 	{
 		if (next->type == COMMENT)
 		{
@@ -81,10 +78,11 @@ static void	strip_comments(t_exec *info)
 		}
 		else
 			tptr = tptr->next;
+		next = tptr->next;
 	}
 }
 
-void		strip_tokens(t_exec *info)
+void	strip_tokens(t_exec *info)
 {
 	strip_comments(info);
 	strip_whitespace(info);

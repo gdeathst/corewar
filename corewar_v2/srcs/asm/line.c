@@ -82,8 +82,8 @@ static void	set_arg_type(t_exec *info, t_line **line, t_arg *arg)
 			arg[i].type = T_REG;
 		if (arg[i].token->type == DIRECT || arg[i].token->type == DIRECT_LABEL)
 			(*line)->arg[i].type = T_DIR;
-		if (arg[i].token->type == INDIRECT ||
-		arg[i].token->type == INDIRECT_LABEL)
+		if (arg[i].token->type == INDIRECT || \
+			arg[i].token->type == INDIRECT_LABEL)
 			(*line)->arg[i].type = T_IND;
 		if (!(arg[i].type & (*line)->op.type[i]))
 			terminate(info, 11 + i, *line);
@@ -92,11 +92,12 @@ static void	set_arg_type(t_exec *info, t_line **line, t_arg *arg)
 		terminate(info, 7, *line);
 }
 
-void		parse_lines(t_exec *info)
+void	parse_lines(t_exec *info)
 {
 	t_line	*lptr;
 
-	if (!(lptr = info->line))
+	lptr = info->line;
+	if (!(lptr))
 		return ;
 	while (lptr)
 	{

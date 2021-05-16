@@ -1,15 +1,3 @@
-/* ************************************************************************** */
-/*                                                                            */
-/*                                                        :::      ::::::::   */
-/*   content.c                                          :+:      :+:    :+:   */
-/*                                                    +:+ +:+         +:+     */
-/*   By: aromny-w <aromny-w@student.21-school.ru>   +#+  +:+       +#+        */
-/*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2020/05/04 00:08:30 by aromny-w          #+#    #+#             */
-/*   Updated: 2020/05/04 00:08:31 by aromny-w         ###   ########.fr       */
-/*                                                                            */
-/* ************************************************************************** */
-
 #include "asm.h"
 
 static char	*get_other(char *s)
@@ -17,8 +5,8 @@ static char	*get_other(char *s)
 	int	i;
 
 	i = 0;
-	if (ft_strchr(LABEL_CHARS, *s) || *s == LABEL_CHAR || (*s == DIRECT_CHAR &&
-	*(s + 1) == LABEL_CHAR))
+	if (ft_strchr(LABEL_CHARS, *s) || *s == LABEL_CHAR || (*s == DIRECT_CHAR && \
+		*(s + 1) == LABEL_CHAR))
 	{
 		if (*s == DIRECT_CHAR && (*(s + 1) == LABEL_CHAR))
 			i += 2;
@@ -74,7 +62,7 @@ static char	*get_string(char *s)
 	return (ft_strndup(s, i));
 }
 
-char		*get_token_content(char *s)
+char	*get_token_content(char *s)
 {
 	if (!ft_strncmp(s, NAME_CMD_STRING, ft_strlen(NAME_CMD_STRING)))
 		return (ft_strdup(NAME_CMD_STRING));

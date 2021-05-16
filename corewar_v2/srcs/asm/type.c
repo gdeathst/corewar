@@ -1,16 +1,8 @@
-/* ************************************************************************** */
-/*                                                                            */
-/*                                                        :::      ::::::::   */
-/*   type.c                                             :+:      :+:    :+:   */
-/*                                                    +:+ +:+         +:+     */
-/*   By: aromny-w <aromny-w@student.21-school.ru>   +#+  +:+       +#+        */
-/*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2020/03/26 22:18:58 by aromny-w          #+#    #+#             */
-/*   Updated: 2020/04/01 22:12:34 by aromny-w         ###   ########.fr       */
-/*                                                                            */
-/* ************************************************************************** */
-
 #include "asm.h"
+
+t_type	ft_check_direct(const char *s);
+
+t_type	ft_check_inderect(const char *s);
 
 static bool	is_register(char *s)
 {
@@ -23,7 +15,7 @@ static bool	is_register(char *s)
 	return (false);
 }
 
-t_type		get_token_type(char *s)
+t_type	get_token_type(char *s)
 {
 	if (!s)
 		return (END);
@@ -36,9 +28,9 @@ t_type		get_token_type(char *s)
 	if (is_register(s))
 		return (REGISTER);
 	if (*s == DIRECT_CHAR)
-		return (*(s + 1) == LABEL_CHAR ? DIRECT_LABEL : DIRECT);
+		return (ft_check_direct(s));
 	if (ft_isdigit(*s) || *s == '-' || *s == LABEL_CHAR)
-		return (*s == LABEL_CHAR ? INDIRECT_LABEL : INDIRECT);
+		return (ft_check_inderect(s));
 	if (*s == '\n')
 		return (ENDLINE);
 	if (*s == SEPARATOR_CHAR)
@@ -50,4 +42,20 @@ t_type		get_token_type(char *s)
 	if (s[ft_strlen(s) - 1] == LABEL_CHAR)
 		return (LABEL);
 	return (INSTRUCTION);
+}
+
+t_type	ft_check_inderect(const char *s)
+{
+	if (*s == LABEL_CHAR)
+		return (INDIRECT_LABEL);
+	else
+		return (INDIRECT);
+}
+
+t_type	ft_check_direct(const char *s)
+{
+	if (*(s + 1) == LABEL_CHAR)
+		return (DIRECT_LABEL);
+	else
+		return (DIRECT);
 }

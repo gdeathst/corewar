@@ -1,25 +1,13 @@
-/* ************************************************************************** */
-/*                                                                            */
-/*                                                        :::      ::::::::   */
-/*   asm.c                                              :+:      :+:    :+:   */
-/*                                                    +:+ +:+         +:+     */
-/*   By: aromny-w <aromny-w@student.21-school.ru>   +#+  +:+       +#+        */
-/*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2019/12/22 16:57:41 by aromny-w          #+#    #+#             */
-/*   Updated: 2020/04/21 03:09:26 by aromny-w         ###   ########.fr       */
-/*                                                                            */
-/* ************************************************************************** */
-
 #include "asm.h"
 
 static void	print_usage(char *name)
 {
 	ft_printf("Usage: %s [-a] <sourcefile.s>\n", name);
 	ft_printf("    -a : Instead of creating a .cor file, outputs a stripped "
-	"and annotated version of the code to the standard output\n");
+		"and annotated version of the code to the standard output\n");
 }
 
-void		assembler(char **input)
+void	assembler(char **input)
 {
 	t_exec	info;
 
@@ -35,7 +23,7 @@ void		assembler(char **input)
 	destroy_struct(&info);
 }
 
-int			main(int argc, char **argv)
+int	main(int argc, char **argv)
 {
 	if (argc > 1)
 		assembler(argv);
