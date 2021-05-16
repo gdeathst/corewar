@@ -1,15 +1,3 @@
-/* ************************************************************************** */
-/*                                                                            */
-/*                                                        :::      ::::::::   */
-/*   pos.c                                              :+:      :+:    :+:   */
-/*                                                    +:+ +:+         +:+     */
-/*   By: aromny-w <aromny-w@student.21-school.ru>   +#+  +:+       +#+        */
-/*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2020/04/27 16:30:52 by aromny-w          #+#    #+#             */
-/*   Updated: 2020/04/27 16:30:53 by aromny-w         ###   ########.fr       */
-/*                                                                            */
-/* ************************************************************************** */
-
 #include "asm.h"
 
 static bool	is_match(char *s1, char *s2)
@@ -38,7 +26,7 @@ static void	dereference_label(t_exec *info, t_arg *arg, int pos)
 	arg->value = lptr->pos - pos;
 }
 
-void		dereference_labels(t_exec *info)
+void	dereference_labels(t_exec *info)
 {
 	t_line	*lptr;
 	int		i;
@@ -48,8 +36,8 @@ void		dereference_labels(t_exec *info)
 	{
 		i = -1;
 		while (lptr->arg[++i].token)
-			if (lptr->arg[i].token->type == DIRECT_LABEL ||
-			lptr->arg[i].token->type == INDIRECT_LABEL)
+			if (lptr->arg[i].token->type == DIRECT_LABEL || \
+				lptr->arg[i].token->type == INDIRECT_LABEL)
 				dereference_label(info, &lptr->arg[i], lptr->pos);
 		lptr = lptr->next;
 	}

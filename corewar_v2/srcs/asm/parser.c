@@ -1,15 +1,3 @@
-/* ************************************************************************** */
-/*                                                                            */
-/*                                                        :::      ::::::::   */
-/*   parser.c                                           :+:      :+:    :+:   */
-/*                                                    +:+ +:+         +:+     */
-/*   By: aromny-w <aromny-w@student.21-school.ru>   +#+  +:+       +#+        */
-/*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2020/04/05 21:17:03 by aromny-w          #+#    #+#             */
-/*   Updated: 2020/04/05 21:17:04 by aromny-w         ###   ########.fr       */
-/*                                                                            */
-/* ************************************************************************** */
-
 #include "asm.h"
 
 static void	reverse_lines(t_line **line)
@@ -48,11 +36,14 @@ static void	add_new_line(t_exec *info, t_tok **token)
 	t_line	*new;
 	int		i;
 
-	if (!(new = (t_line *)ft_memalloc(sizeof(t_line))))
+	new = (t_line *)ft_memalloc(sizeof(t_line));
+	if (!new)
 		terminate(info, 0, NULL);
 	new->next = info->line;
 	info->line = new;
-	if ((*token)->type == LABEL && (new->label = *token))
+	if ((*token)->type == LABEL)
+		new->label = *token;
+	if ((*token)->type == LABEL && new->label)
 		*token = (*token)->next;
 	if ((*token)->type == INSTRUCTION)
 		new->op = get_operation(info, *token);
@@ -85,21 +76,27 @@ static void	set_header(t_exec *info, t_tok **token)
 			s2 = (*token)->next->content + 1;
 		*token = (*token)->next->next;
 	}
-	if ((len1 = ft_strlen(s1) - 1) > PROG_NAME_LENGTH)
+	len1 = ft_strlen(s1) - 1;
+	if (len1 > PROG_NAME_LENGTH)
 		terminate(info, 9, NULL);
-	if ((len2 = ft_strlen(s2) - 1) > COMMENT_LENGTH)
+	len2 = ft_strlen(s2) - 1;
+	if (len2 > COMMENT_LENGTH)
 		terminate(info, 10, NULL);
 	ft_strncpy(info->header.prog_name, s1, len1);
 	ft_strncpy(info->header.comment, s2, len2);
 }
 
-void		parse_tokens(t_exec *info)
+void	parse_tokens(t_exec *info)
 {
 	t_tok	*tptr;
 
 	tptr = info->token;
 	set_header(info, &tptr);
-	while ((tptr = tptr->next)->type != END)
+	tptr = tptr->next;
+	while ((tptr)->type != END)
+	{
 		add_new_line(info, &tptr);
+		tptr = tptr->next;
+	}
 	reverse_lines(&info->line);
 }

@@ -1,15 +1,3 @@
-/* ************************************************************************** */
-/*                                                                            */
-/*                                                        :::      ::::::::   */
-/*   destroy.c                                          :+:      :+:    :+:   */
-/*                                                    +:+ +:+         +:+     */
-/*   By: aromny-w <aromny-w@student.21-school.ru>   +#+  +:+       +#+        */
-/*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2020/02/03 16:07:56 by aromny-w          #+#    #+#             */
-/*   Updated: 2020/04/05 00:58:41 by aromny-w         ###   ########.fr       */
-/*                                                                            */
-/* ************************************************************************** */
-
 #include "asm.h"
 
 static void	destroy_lines(t_exec *info)
@@ -42,7 +30,7 @@ static void	destroy_tokens(t_exec *info)
 	}
 }
 
-void		destroy_struct(t_exec *info)
+void	destroy_struct(t_exec *info)
 {
 	free(info->filename);
 	free(info->buf);
