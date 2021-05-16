@@ -1,18 +1,6 @@
-/* ************************************************************************** */
-/*                                                                            */
-/*                                                        :::      ::::::::   */
-/*   dpf_form_unsigned.c                                :+:      :+:    :+:   */
-/*                                                    +:+ +:+         +:+     */
-/*   By: aromny-w <marvin@42.fr>                    +#+  +:+       +#+        */
-/*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2019/03/02 19:44:01 by aromny-w          #+#    #+#             */
-/*   Updated: 2020/02/12 22:28:33 by aromny-w         ###   ########.fr       */
-/*                                                                            */
-/* ************************************************************************** */
-
 #include "ft_dprintf.h"
 
-static void			putunbr(t_dpf *info, uintmax_t n)
+static void	putunbr(t_dpf *info, uintmax_t n)
 {
 	if (n < 10)
 		ft_putchar_fd(n + '0', info->fd);
@@ -23,17 +11,20 @@ static void			putunbr(t_dpf *info, uintmax_t n)
 	}
 }
 
-static int			nlen(uintmax_t n)
+static int	nlen(uintmax_t n)
 {
 	int	len;
 
 	len = 1;
-	while (n /= 10)
+	while (n / 10)
+	{
+		n /= 10;
 		len++;
+	}
 	return (len);
 }
 
-static int			print(t_dpf *info, uintmax_t n, int len)
+static int	print(t_dpf *info, uintmax_t n, int len)
 {
 	if (info->width > 0 && !info->flags.minus && !info->flags.zero)
 		ft_padchar_fd(' ', info->width, info->fd);
@@ -45,7 +36,9 @@ static int			print(t_dpf *info, uintmax_t n, int len)
 		putunbr(info, n);
 	if (info->width > 0 && info->flags.minus)
 		ft_padchar_fd(' ', info->width, info->fd);
-	return (len + (info->width > 0 ? info->width : 0));
+	if (info->width > 0)
+		return (len + info->width);
+	return (len);
 }
 
 static uintmax_t	cast(uintmax_t n, t_dmods mods, char spec)
@@ -71,7 +64,7 @@ static uintmax_t	cast(uintmax_t n, t_dmods mods, char spec)
 	return ((unsigned int)n);
 }
 
-int					dform_unsigned(va_list arg, t_dpf *info)
+int	dform_unsigned(va_list arg, t_dpf *info)
 {
 	uintmax_t	n;
 	int			len;
@@ -80,7 +73,10 @@ int					dform_unsigned(va_list arg, t_dpf *info)
 	len = 0;
 	if (!(!n && !info->prec))
 	{
-		len = nlen(n) > info->prec ? nlen(n) : info->prec;
+		if (nlen(n) > info->prec)
+			len = nlen(n);
+		else
+			len = info->prec;
 		info->width -= len;
 		info->prec -= nlen(n);
 	}

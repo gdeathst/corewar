@@ -142,7 +142,7 @@
 ** tp		sSpdDioOuUxXcC
 */
 
-typedef struct		s_prntf
+typedef struct s_prntf
 {
 	char			*str;
 	int				nw;
