@@ -1,15 +1,3 @@
-/* ************************************************************************** */
-/*                                                                            */
-/*                                                        :::      ::::::::   */
-/*   dpf_set_mod.c                                      :+:      :+:    :+:   */
-/*                                                    +:+ +:+         +:+     */
-/*   By: aromny-w <marvin@42.fr>                    +#+  +:+       +#+        */
-/*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2019/05/25 17:30:40 by aromny-w          #+#    #+#             */
-/*   Updated: 2020/02/12 22:24:25 by aromny-w         ###   ########.fr       */
-/*                                                                            */
-/* ************************************************************************** */
-
 #include "ft_dprintf.h"
 
 static int	ismod(int c)
@@ -21,7 +9,7 @@ static int	ismod(int c)
 	return (0);
 }
 
-void		dset_mod(const char **format, t_dmods *mods)
+void	dset_mod(const char **format, t_dmods *mods)
 {
 	while (ismod(**format))
 	{
@@ -41,6 +29,9 @@ void		dset_mod(const char **format, t_dmods *mods)
 			mods->z = 1;
 		else if (**format == 'q')
 			mods->q = 1;
-		*format += **format != *(*format + 1) ? 1 : 2;
+		if (**format != *(*format + 1))
+			*format += 1;
+		else
+			*format += 2;
 	}
 }

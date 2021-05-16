@@ -47,7 +47,7 @@ PRINTF = ft_printf.c flags.c width.c prec.c mod.c spec.c unknown.c percent.c \
 
 DPRINTF = ft_dprintf.c flags.c width.c prec.c mod.c spec.c unknown.c percent.c \
 		  integer.c unsigned.c octal.c hexa.c float.c character.c string.c \
-		  pointer.c wcharacter.c
+		  pointer.c wcharacter.c float2.c integer2.c
 
 SRCS = $(addprefix srcs/, $(LIB))
 

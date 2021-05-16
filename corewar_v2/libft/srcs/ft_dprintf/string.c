@@ -12,20 +12,42 @@
 
 #include "ft_dprintf.h"
 
+static int	print_2(t_dpf *info, int len)
+{
+	if (info->width > 0 && info->flags.minus)
+		ft_padchar_fd(' ', info->width, info->fd);
+	if (info->width > 0)
+		return (len + info->width);
+	return (len);
+}
+
 static int	print(t_dpf *info, char *str, int len)
 {
 	if (info->width > 0 && !info->flags.minus)
-		ft_padchar_fd(!info->flags.zero ? ' ' : '0', info->width, info->fd);
+	{
+		if (!info->flags.zero)
+			ft_padchar_fd(' ', info->width, info->fd);
+		else
+			ft_padchar_fd('0', info->width, info->fd);
+	}
 	if ((info->spec != 'S' && !info->mods.l))
-		ft_putnstr_fd(str ? str : "(null)", info->prec, info->fd);
+	{
+		if (str)
+			ft_putnstr_fd(str, info->prec, info->fd);
+		else
+			ft_putnstr_fd("(null)", info->prec, info->fd);
+	}
 	else
-		ft_putnwcstr_fd(str ? (wchar_t *)str : L"(null)", info->prec, info->fd);
-	if (info->width > 0 && info->flags.minus)
-		ft_padchar_fd(' ', info->width, info->fd);
-	return (len + (info->width > 0 ? info->width : 0));
+	{
+		if (str)
+			ft_putnwcstr_fd((wchar_t *)str, info->prec, info->fd);
+		else
+			ft_putnwcstr_fd(L"(null)", info->prec, info->fd);
+	}
+	return (print_2(info, len));
 }
 
-int			dform_string(va_list arg, t_dpf *info)
+int	dform_string(va_list arg, t_dpf *info)
 {
 	char	*str;
 	int		len;
@@ -33,12 +55,18 @@ int			dform_string(va_list arg, t_dpf *info)
 	if (info->spec != 'S' && !info->mods.l)
 	{
 		str = va_arg(arg, char *);
-		len = (int)ft_strnlen(str ? str : "(null)", info->prec);
+		if (str)
+			len = (int)ft_strnlen("(null)", info->prec);
+		else
+			len = (int)ft_strnlen(str, info->prec);
 	}
 	else
 	{
 		str = (char *)va_arg(arg, wchar_t *);
-		len = (int)ft_wcsnlen(str ? (wchar_t *)str : L"(null)", info->prec);
+		if (str)
+			len = (int)ft_wcsnlen((wchar_t *)str, info->prec);
+		else
+			len = (int)ft_wcsnlen(L"(null)", info->prec);
 	}
 	info->width -= len;
 	return (print(info, str, len));

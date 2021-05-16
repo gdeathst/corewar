@@ -12,10 +12,15 @@
 
 #include "ft_dprintf.h"
 
-static void			puthexnbr(t_dpf *info, uintmax_t n, char a)
+static void	puthexnbr(t_dpf *info, uintmax_t n, char a)
 {
 	if (n < 16)
-		ft_putchar_fd(n + (n < 10 ? '0' : a - 10), info->fd);
+	{
+		if (n < 10)
+			ft_putchar_fd(n + ('0'), info->fd);
+		else
+			ft_putchar_fd(n + (a - 10), info->fd);
+	}
 	else
 	{
 		puthexnbr(info, n / 16, a);
@@ -23,31 +28,46 @@ static void			puthexnbr(t_dpf *info, uintmax_t n, char a)
 	}
 }
 
-static int			nlen(uintmax_t n)
+static int	nlen(uintmax_t n)
 {
 	int	len;
 
 	len = 1;
-	while (n /= 16)
+	while (n / 16)
+	{
+		n /= 16;
 		len++;
+	}
 	return (len);
 }
 
-static int			print(t_dpf *info, uintmax_t n, int len)
+static int	print(t_dpf *info, uintmax_t n, int len)
 {
 	if (info->width > 0 && !info->flags.minus && !info->flags.zero)
 		ft_padchar_fd(' ', info->width, info->fd);
 	if (n && info->flags.hash)
-		ft_putstr_fd(info->spec != 'X' ? "0x" : "0X", info->fd);
+	{
+		if (info->spec != 'X')
+			ft_putstr_fd("0x", info->fd);
+		else
+			ft_putstr_fd("0X", info->fd);
+	}
 	if (info->prec > 0)
 		ft_padchar_fd('0', info->prec, info->fd);
 	else if (info->width > 0 && !info->flags.minus && info->flags.zero)
 		ft_padchar_fd('0', info->width, info->fd);
 	if (len)
-		puthexnbr(info, n, info->spec != 'X' ? 'a' : 'A');
+	{
+		if (info->spec != 'X')
+			puthexnbr(info, n, 'a');
+		else
+			puthexnbr(info, n, 'A');
+	}
 	if (info->width > 0 && info->flags.minus)
 		ft_padchar_fd(' ', info->width, info->fd);
-	return (len + (info->width > 0 ? info->width : 0));
+	if (info->width > 0)
+		return (len + (info->width));
+	return (len);
 }
 
 static uintmax_t	cast(uintmax_t n, t_dmods mods)
@@ -71,7 +91,7 @@ static uintmax_t	cast(uintmax_t n, t_dmods mods)
 	return ((unsigned int)n);
 }
 
-int					dform_hexa(va_list arg, t_dpf *info)
+int	dform_hexa(va_list arg, t_dpf *info)
 {
 	uintmax_t	n;
 	int			len;
@@ -80,7 +100,10 @@ int					dform_hexa(va_list arg, t_dpf *info)
 	len = 0;
 	if (!(!n && !info->prec))
 	{
-		len = nlen(n) > info->prec ? nlen(n) : info->prec;
+		if (nlen(n) > info->prec)
+			len = nlen(n);
+		else
+			len = info->prec;
 		if (n > 0 && info->flags.hash)
 			len += 2;
 		info->width -= len;

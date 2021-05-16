@@ -68,5 +68,7 @@ int				dform_character(va_list arg, t_dpf *info);
 int				dform_string(va_list arg, t_dpf *info);
 int				dform_pointer(va_list arg, t_dpf *info);
 int				dform_wcharacter(va_list arg, t_dpf *info);
+int				print2(t_dpf *info, long double n, int len);
+int				integer2_res_ret(t_dpf *info, intmax_t n, int len);
 
 #endif

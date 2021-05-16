@@ -21,7 +21,7 @@ static int	isnumeric(int c)
 	return (0);
 }
 
-void		dset_spec(const char **format, t_dpf *info)
+void	dset_spec(const char **format, t_dpf *info)
 {
 	info->spec = **format;
 	if (!info->flags.hash && info->spec == 'p')

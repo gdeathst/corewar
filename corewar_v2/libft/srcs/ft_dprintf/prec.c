@@ -23,7 +23,8 @@ void	dset_prec(const char **format, va_list arg, t_dpf *info)
 				info->prec = 10 * info->prec + (*(*format)++ - '0');
 		else
 		{
-			if ((info->prec = va_arg(arg, int)) < 0)
+			info->prec = va_arg(arg, int);
+			if ((info->prec) < 0)
 				info->prec = -1;
 			(*format)++;
 		}
