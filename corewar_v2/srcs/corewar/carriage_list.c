@@ -1,19 +1,7 @@
-/* ************************************************************************** */
-/*                                                                            */
-/*                                                        :::      ::::::::   */
-/*   carriage_list.c                                    :+:      :+:    :+:   */
-/*                                                    +:+ +:+         +:+     */
-/*   By: bgilwood <bgilwood@student.42.fr>          +#+  +:+       +#+        */
-/*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2020/04/12 23:35:30 by bgilwood          #+#    #+#             */
-/*   Updated: 2020/07/27 21:57:32 by bgilwood         ###   ########.fr       */
-/*                                                                            */
-/* ************************************************************************** */
-
 #include "corewar.h"
 
 void	add_carriage_elem(t_car_list_elem **head,
-					int car_position, int player_id, int id)
+						  int car_position, int player_id, int id)
 {
 	t_carriage		*new_carriage;
 
@@ -29,7 +17,7 @@ void	insert_existing_carriage(t_car_list_elem **head, t_carriage *elem)
 
 	if (!head)
 		return ;
-	new_elem = (t_car_list_elem*)ft_memalloc(sizeof(t_car_list_elem));
+	new_elem = (t_car_list_elem *)ft_memalloc(sizeof(t_car_list_elem));
 	if (!new_elem)
 		error("Memory error, the virtual machine is stopping now.", NULL);
 	if (*head)

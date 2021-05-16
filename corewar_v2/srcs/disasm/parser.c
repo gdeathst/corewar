@@ -1,15 +1,3 @@
-/* ************************************************************************** */
-/*                                                                            */
-/*                                                        :::      ::::::::   */
-/*   parser.c                                           :+:      :+:    :+:   */
-/*                                                    +:+ +:+         +:+     */
-/*   By: aromny-w <marvin@42.fr>                    +#+  +:+       +#+        */
-/*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2020/08/03 18:05:05 by malannys          #+#    #+#             */
-/*   Updated: 2020/08/03 18:05:10 by malannys         ###   ########.fr       */
-/*                                                                            */
-/* ************************************************************************** */
-
 #include "disasm.h"
 
 static uint8_t	*parse_code(int fd, size_t len)
@@ -18,7 +6,8 @@ static uint8_t	*parse_code(int fd, size_t len)
 	uint8_t	*buff;
 	int8_t	check;
 
-	if (!(buff = (uint8_t *)ft_memalloc(sizeof(int8_t) * len)))
+	buff = (uint8_t *)ft_memalloc(sizeof(int8_t) * len);
+	if (!(buff))
 		error("Malloc failure.");
 	size = read(fd, buff, len);
 	if (size == -1)
@@ -28,12 +17,13 @@ static uint8_t	*parse_code(int fd, size_t len)
 	return (buff);
 }
 
-static char		*parse_string(int fd, size_t len)
+static char	*parse_string(int fd, size_t len)
 {
 	ssize_t	size;
 	char	*buff;
 
-	if (!(buff = ft_strnew(len)))
+	buff = ft_strnew(len);
+	if (!(buff))
 		error("Malloc failure.");
 	size = read(fd, buff, len);
 	if (size == -1)
@@ -56,12 +46,13 @@ static int32_t	parse_4bytes(int fd)
 	return (bin_to_num(val, 4));
 }
 
-static void		check_filename(char *filename)
+static void	check_filename(char *filename)
 {
 	char	**filename_parts;
 	int		rows;
 
-	if (!(filename_parts = ft_strsplit(filename, '.')))
+	filename_parts = ft_strsplit(filename, '.');
+	if (!(filename_parts))
 		error("Malloc failure.");
 	rows = rows_count(filename_parts);
 	if (rows < 2 || !ft_strequ(filename_parts[rows - 1], "cor"))
@@ -69,14 +60,16 @@ static void		check_filename(char *filename)
 	ft_arrdel(&filename_parts);
 }
 
-void			parse_bin(t_bin *bin, char *file)
+void	parse_bin(t_bin *bin, char *file)
 {
 	int	fd;
 
 	check_filename(file);
-	if (!(bin->filename = ft_strdup(file)))
+	bin->filename = ft_strdup(file);
+	if (!(bin->filename))
 		error("Malloc failure.");
-	if ((fd = open(file, O_RDONLY)) == -1)
+	fd = open(file, O_RDONLY);
+	if ((fd) == -1)
 		error("Open failure.");
 	if (parse_4bytes(fd) != COREWAR_EXEC_MAGIC)
 		error("Invalid magic header.");

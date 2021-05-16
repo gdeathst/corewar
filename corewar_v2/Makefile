@@ -21,7 +21,7 @@ FWS = -framework OpenGL -framework AppKit
 SRCS = add.c aff.c and.c fork.c ld.c ldi.c lfork.c live.c lld.c lldi.c or.c \
 	   st.c sti.c sub.c xor.c zjmp.c op_args.c
 SRCS := $(addprefix operations/, $(SRCS))
-SRCS += main.c parse_args.c sort_players.c validate.c init.c free.c error.c \
+SRCS += main.c parse_args.c sort_players.c validate.c validate_get_fd.c init.c free.c error.c \
 	   stuff.c arena.c carriage_list.c create_carriage.c carriage.c exit.c \
 	   game.c players.c printing.c exec_op.c visu/visu.c visu/draw.c
 SRCS := $(addprefix corewar/, $(SRCS))

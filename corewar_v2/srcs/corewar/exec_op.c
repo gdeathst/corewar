@@ -1,23 +1,25 @@
-/* ************************************************************************** */
-/*                                                                            */
-/*                                                        :::      ::::::::   */
-/*   exec_op.c                                          :+:      :+:    :+:   */
-/*                                                    +:+ +:+         +:+     */
-/*   By: bgilwood <bgilwood@student.42.fr>          +#+  +:+       +#+        */
-/*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2020/07/13 20:51:21 by bgilwood          #+#    #+#             */
-/*   Updated: 2020/07/29 21:41:53 by bgilwood         ###   ########.fr       */
-/*                                                                            */
-/* ************************************************************************** */
-
 #include "corewar.h"
 
-int		validate_argcode(t_carriage *carriage, int code)
+int	increment_skip_val(t_carriage *carriage)
 {
-	int i;
-	int arg_type;
-	int valid;
-	int skip;
+	if (g_op_tab[carriage->code_op - 1].idx)
+		return (IND_SIZE);
+	return (DIR_SIZE);
+}
+
+int	increase_skip_val(int arg_type)
+{
+	if (arg_type == IND_CODE)
+		return (IND_SIZE);
+	return (sizeof(char));
+}
+
+int	validate_argcode(t_carriage *carriage, int code)
+{
+	int	i;
+	int	arg_type;
+	int	valid;
+	int	skip;
 
 	valid = 1;
 	skip = 0;
@@ -32,9 +34,9 @@ int		validate_argcode(t_carriage *carriage, int code)
 		if (!(g_op_tab[carriage->code_op - 1].type[i] & (1 << (arg_type - 1))))
 			valid = 0;
 		if (arg_type == DIR_CODE)
-			skip += g_op_tab[carriage->code_op - 1].idx ? IND_SIZE : DIR_SIZE;
+			skip += increment_skip_val(carriage);
 		else
-			skip += arg_type == IND_CODE ? IND_SIZE : sizeof(char);
+			skip += increase_skip_val(arg_type);
 	}
 	if (!valid)
 		carriage->bytes_next_op += skip;
@@ -51,8 +53,8 @@ void	exec_op(t_carriage *carriage, t_game_params *params)
 	arg_code = 0;
 	if (g_op_tab[carriage->code_op - 1].pcode)
 	{
-		arg_code = arena_read_byte(params->arena, carriage->cur_position +
-					carriage->bytes_next_op);
+		arg_code = arena_read_byte(params->arena, carriage->cur_position
+				+ carriage->bytes_next_op);
 		carriage->bytes_next_op++;
 		if (!validate_argcode(carriage, arg_code))
 			return ;

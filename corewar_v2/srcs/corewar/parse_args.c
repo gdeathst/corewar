@@ -1,15 +1,3 @@
-/* ************************************************************************** */
-/*                                                                            */
-/*                                                        :::      ::::::::   */
-/*   parse_args.c                                       :+:      :+:    :+:   */
-/*                                                    +:+ +:+         +:+     */
-/*   By: bgilwood <bgilwood@student.42.fr>          +#+  +:+       +#+        */
-/*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2020/07/16 22:14:29 by bgilwood          #+#    #+#             */
-/*   Updated: 2020/07/16 22:26:37 by bgilwood         ###   ########.fr       */
-/*                                                                            */
-/* ************************************************************************** */
-
 #include "corewar.h"
 
 static void	push_player(t_player **head, t_player *player)
@@ -66,12 +54,12 @@ static void	put_n_player(int ac, char **av, int *i, t_player **players)
 		print_usage(av[0]);
 	num = ft_atoi(av[*i]);
 	compare_num = ft_itoa(num);
-	if (num <= 0 || num > MAX_PLAYERS ||
-				!ft_strequ(av[*i], compare_num) || (++*i == ac))
+	if (num <= 0 || num > MAX_PLAYERS
+		|| !ft_strequ(av[*i], compare_num) || (++*i == ac))
 	{
 		ft_putstr_fd(RED, 2);
 		ft_putstr_fd("ERROR: Incorrect "
-				"champion's -n number: must be from 1 to ", 2);
+			"champion's -n number: must be from 1 to ", 2);
 		ft_putnbr_fd(MAX_PLAYERS, 2);
 		ft_putstr_fd(".\n\n", 2);
 		ft_putstr_fd(RESET_COLOR, 2);
@@ -82,7 +70,7 @@ static void	put_n_player(int ac, char **av, int *i, t_player **players)
 	ft_strdel(&compare_num);
 }
 
-void		get_args(int ac, char **av, t_game_params *params)
+void	get_args(int ac, char **av, t_game_params *params)
 {
 	int			i;
 	t_player	*players;
@@ -90,8 +78,9 @@ void		get_args(int ac, char **av, t_game_params *params)
 
 	i = 0;
 	players = NULL;
-	while (++i < ac && (check = av[i]))
+	while (++i < ac)
 	{
+		check = av[i];
 		if (ft_strequ(check, "-dump"))
 			set_dump(ac, av, &i, params);
 		else if (ft_strequ(av[i], "-n"))

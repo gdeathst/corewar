@@ -1,18 +1,6 @@
-/* ************************************************************************** */
-/*                                                                            */
-/*                                                        :::      ::::::::   */
-/*   write_asm.c                                        :+:      :+:    :+:   */
-/*                                                    +:+ +:+         +:+     */
-/*   By: aromny-w <marvin@42.fr>                    +#+  +:+       +#+        */
-/*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2020/08/03 18:05:05 by malannys          #+#    #+#             */
-/*   Updated: 2020/08/03 18:05:10 by malannys         ###   ########.fr       */
-/*                                                                            */
-/* ************************************************************************** */
-
 #include "disasm.h"
 
-static void		write_args(int fd, t_instruction *instr)
+static void	write_args(int fd, t_instruction *instr)
 {
 	size_t	i;
 
@@ -33,20 +21,22 @@ static void		write_args(int fd, t_instruction *instr)
 	}
 }
 
-static char		*change_extension(char *filename)
+static char	*change_extension(char *filename)
 {
 	char	*res;
 	char	*tmp;
 
-	if (!(tmp = ft_strndup(filename, ft_strlen(filename) - 4)))
+	tmp = ft_strndup(filename, ft_strlen(filename) - 4);
+	if (!(tmp))
 		error("Malloc failure.");
-	if (!(res = ft_strjoin(tmp, ".s")))
+	res = ft_strjoin(tmp, ".s");
+	if (!(res))
 		error("Malloc failure.");
 	free(tmp);
 	return (res);
 }
 
-static void		write_asm1(t_instruction *tmp, \
+static void	write_asm1(t_instruction *tmp, \
 								int fd, char *filename)
 {
 	while (tmp)
@@ -61,7 +51,7 @@ static void		write_asm1(t_instruction *tmp, \
 	close(fd);
 }
 
-void			write_asm(t_bin *bin)
+void	write_asm(t_bin *bin)
 {
 	int				fd;
 	char			*filename;
@@ -69,7 +59,8 @@ void			write_asm(t_bin *bin)
 
 	tmp = bin->instr;
 	filename = change_extension(bin->filename);
-	if ((fd = open(filename, O_WRONLY | O_CREAT | O_TRUNC, 0644)) == -1)
+	fd = open(filename, O_WRONLY | O_CREAT | O_TRUNC, 0644);
+	if (fd == -1)
 		error("Open failure.");
 	ft_printf("Writing output program to %s.\n", filename);
 	ft_putstr_fd(NAME_CMD_STRING, fd);

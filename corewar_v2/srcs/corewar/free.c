@@ -14,7 +14,7 @@
 
 void	free_parts(char **array)
 {
-	int i;
+	int	i;
 
 	if (!array || !*array)
 		return ;

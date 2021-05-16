@@ -1,15 +1,3 @@
-/* ************************************************************************** */
-/*                                                                            */
-/*                                                        :::      ::::::::   */
-/*   game.c                                             :+:      :+:    :+:   */
-/*                                                    +:+ +:+         +:+     */
-/*   By: bgilwood <bgilwood@student.42.fr>          +#+  +:+       +#+        */
-/*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2020/06/12 00:06:41 by bgilwood          #+#    #+#             */
-/*   Updated: 2020/07/29 23:55:45 by bgilwood         ###   ########.fr       */
-/*                                                                            */
-/* ************************************************************************** */
-
 #include "corewar.h"
 
 void	check_carriages(t_car_list_elem **carriages, t_game_params *params)
@@ -23,15 +11,15 @@ void	check_carriages(t_car_list_elem **carriages, t_game_params *params)
 	while (elem)
 	{
 		next_elem = elem->next;
-		if (!elem->content->last_live || params->cycles_since_start -
-		elem->content->last_live > params->cycles_to_die)
+		if (!elem->content->last_live || params->cycles_since_start
+			- elem->content->last_live > params->cycles_to_die)
 			delete_carriage_elem(carriages, elem->content->id);
 		elem = next_elem;
 	}
 	if (!*carriages || params->cycles_to_die < 0)
 		game_over(params, *carriages);
 	if (params->live_count_in_period >= NBR_LIVE
-			|| ++params->checks_count == MAX_CHECKS)
+		|| ++params->checks_count == MAX_CHECKS)
 	{
 		params->cycles_to_die -= CYCLE_DELTA;
 		params->checks_count = 0;
@@ -57,7 +45,7 @@ void	play_cycle(t_game_params *params)
 		{
 			exec_op(list_elem->content, params);
 			move_carriage(list_elem->content,
-								list_elem->content->bytes_next_op);
+				list_elem->content->bytes_next_op);
 		}
 		list_elem = list_elem->next;
 	}
@@ -67,8 +55,8 @@ void	play_game(t_game_params *params)
 {
 	while (true)
 	{
-		if (params->dump_flag_on && params->cycles_since_start ==
-		params->dump_idx)
+		if (params->dump_flag_on && params->cycles_since_start
+			== params->dump_idx)
 			dump_mem_and_exit(params, params->carriages_list);
 		play_cycle(params);
 		params->cycles_since_start++;

@@ -1,15 +1,3 @@
-/* ************************************************************************** */
-/*                                                                            */
-/*                                                        :::      ::::::::   */
-/*   arena.c                                            :+:      :+:    :+:   */
-/*                                                    +:+ +:+         +:+     */
-/*   By: bgilwood <bgilwood@student.42.fr>          +#+  +:+       +#+        */
-/*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2020/04/19 00:59:52 by bgilwood          #+#    #+#             */
-/*   Updated: 2020/07/20 22:46:56 by bgilwood         ###   ########.fr       */
-/*                                                                            */
-/* ************************************************************************** */
-
 #include "corewar.h"
 
 void	*arena_init(void)
@@ -22,7 +10,7 @@ void	*arena_init(void)
 	return (mem);
 }
 
-int		get_new_coord(int raw_coord)
+int	get_new_coord(int raw_coord)
 {
 	raw_coord %= MEM_SIZE;
 	if (raw_coord < 0)
@@ -30,7 +18,7 @@ int		get_new_coord(int raw_coord)
 	return (raw_coord);
 }
 
-int		arena_read_byte(char *arena, int cur_position)
+int	arena_read_byte(char *arena, int cur_position)
 {
 	char	ans;
 
@@ -39,7 +27,7 @@ int		arena_read_byte(char *arena, int cur_position)
 	return (ans);
 }
 
-int		read_number(char *arena, int position, int size_bytes)
+int	read_number(char *arena, int position, int size_bytes)
 {
 	int				result;
 	int				sign;
@@ -56,13 +44,15 @@ int		read_number(char *arena, int position, int size_bytes)
 		size_bytes--;
 		if (sign)
 			result += (byte_code[get_new_coord(position + size_bytes)] ^ 255)
-																	<< (8 * i);
+				<< (8 * i);
 		else
 			result += (byte_code[get_new_coord(position + size_bytes)] & 255)
-																	<< (8 * i);
+				<< (8 * i);
 		i++;
 	}
-	return (sign ? ~result : result);
+	if (sign)
+		return (~result);
+	return (result);
 }
 
 void	write_number(char *arena, int position, int size_bytes, int number)
@@ -81,7 +71,7 @@ void	write_number(char *arena, int position, int size_bytes, int number)
 	while (i < size_bytes)
 	{
 		ft_memcpy(arena + get_new_coord(position + i),
-					byte + 4 - size_bytes + i, 1);
+			byte + 4 - size_bytes + i, 1);
 		i++;
 	}
 }

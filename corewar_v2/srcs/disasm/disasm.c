@@ -1,15 +1,3 @@
-/* ************************************************************************** */
-/*                                                                            */
-/*                                                        :::      ::::::::   */
-/*   disasm.c                                           :+:      :+:    :+:   */
-/*                                                    +:+ +:+         +:+     */
-/*   By: aromny-w <marvin@42.fr>                    +#+  +:+       +#+        */
-/*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2020/08/03 18:05:05 by malannys          #+#    #+#             */
-/*   Updated: 2020/08/03 18:05:10 by malannys         ###   ########.fr       */
-/*                                                                            */
-/* ************************************************************************** */
-
 #include "disasm.h"
 
 static size_t	read_arg_val(uint8_t *code, t_instruction *instr)
@@ -24,7 +12,11 @@ static size_t	read_arg_val(uint8_t *code, t_instruction *instr)
 	while (j < (size_t)instr->op.params)
 	{
 		if (instr->arg_type[j] == T_DIR)
-			arg_size = instr->op.idx ? 2 : 4;
+		{
+			arg_size = 4;
+			if (instr->op.idx)
+				arg_size = 2;
+		}
 		else if (instr->arg_type[j] == T_REG)
 			arg_size = 1;
 		else
@@ -34,6 +26,13 @@ static size_t	read_arg_val(uint8_t *code, t_instruction *instr)
 		j++;
 	}
 	return (code_idx);
+}
+
+int	res_to_return(t_instruction *instr)
+{
+	if (instr->op.params == 1)
+		return (0);
+	return (1);
 }
 
 static size_t	read_arg_types(uint8_t *code, t_instruction *instr)
@@ -61,10 +60,10 @@ static size_t	read_arg_types(uint8_t *code, t_instruction *instr)
 			j++;
 		}
 	}
-	return (instr->op.params == 1 ? 0 : 1);
+	return (res_to_return(instr));
 }
 
-void			disassemble(t_bin *bin)
+void	disassemble(t_bin *bin)
 {
 	size_t			i;
 	t_instruction	*instr;

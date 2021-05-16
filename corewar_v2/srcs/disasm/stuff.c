@@ -1,22 +1,10 @@
-/* ************************************************************************** */
-/*                                                                            */
-/*                                                        :::      ::::::::   */
-/*   stuff.c                                            :+:      :+:    :+:   */
-/*                                                    +:+ +:+         +:+     */
-/*   By: aromny-w <marvin@42.fr>                    +#+  +:+       +#+        */
-/*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2020/08/03 18:05:05 by malannys          #+#    #+#             */
-/*   Updated: 2020/08/03 18:05:10 by malannys         ###   ########.fr       */
-/*                                                                            */
-/* ************************************************************************** */
-
 #include "disasm.h"
 
 /*
 ** (2^8)^i
 */
 
-int32_t		bin_to_num(uint8_t *val, size_t len)
+int32_t	bin_to_num(uint8_t *val, size_t len)
 {
 	int32_t	sign;
 	int32_t	res;
@@ -24,7 +12,9 @@ int32_t		bin_to_num(uint8_t *val, size_t len)
 
 	i = 0;
 	res = 0;
-	sign = val[0] & 0x80 ? 1 : 0;
+	sign = 0;
+	if (val[0] & 0x80)
+		sign = 1;
 	while (i < len)
 	{
 		if (sign)
@@ -33,10 +23,12 @@ int32_t		bin_to_num(uint8_t *val, size_t len)
 		i++;
 	}
 	res += sign;
-	return (sign ? -res : res);
+	if (sign)
+		return (-res);
+	return (res);
 }
 
-int			rows_count(char **arr)
+int	rows_count(char **arr)
 {
 	int		i;
 

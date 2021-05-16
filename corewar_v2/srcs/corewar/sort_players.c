@@ -68,25 +68,27 @@ static void	set_rest_players(t_game_params *prms, t_player *lst)
 	}
 }
 
-void		sort_players(t_game_params *prms, t_player **lst, char **av)
+void	sort_players(t_game_params *prms, t_player **lst, char **av)
 {
 	int		max_player_num;
 
 	max_player_num = 0;
-	if (!(prms->players_num = players_num(*lst, &max_player_num)) \
+	prms->players_num = players_num(*lst, &max_player_num);
+	if (!(prms->players_num) \
 			|| prms->players_num > MAX_PLAYERS
-			|| prms->players_num < max_player_num)
+		|| prms->players_num < max_player_num)
 	{
 		print_error_msg("Incorrect number of champions: "
-						"must be consequent, > 0, <= ", NULL);
+			"must be consequent, > 0, <= ", NULL);
 		ft_putstr_fd(RED, 2);
 		ft_putnbr_fd(MAX_PLAYERS, 2);
 		ft_putstr_fd(RESET_COLOR, 2);
 		ft_putstr_fd("\n\n", 2);
 		print_usage(av[0]);
 	}
-	if (!(prms->players = (t_player **)ft_memalloc(\
-			sizeof(t_player *) * (prms->players_num + 1))))
+	prms->players = (t_player **)ft_memalloc(\
+			sizeof(t_player *) * (prms->players_num + 1));
+	if (!(prms->players))
 		error("Malloc failure.", NULL);
 	set_players_with_n(prms, *lst);
 	set_rest_players(prms, *lst);
