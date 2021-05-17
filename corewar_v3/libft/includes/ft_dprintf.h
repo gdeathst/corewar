@@ -19,7 +19,7 @@
 # include <sys/types.h>
 # include "libft.h"
 
-typedef struct	s_dmods
+typedef struct s_dmods
 {
 	bool	hh;
 	bool	h;
@@ -31,7 +31,7 @@ typedef struct	s_dmods
 	bool	q;
 }				t_dmods;
 
-typedef struct	s_dflags
+typedef struct s_dflags
 {
 	bool	hash;
 	bool	zero;
@@ -40,7 +40,7 @@ typedef struct	s_dflags
 	bool	plus;
 }				t_dflags;
 
-typedef struct	s_dpf
+typedef struct s_dpf
 {
 	int				written;
 	int				fd;

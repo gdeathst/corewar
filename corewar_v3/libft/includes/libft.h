@@ -1,15 +1,3 @@
-/* ************************************************************************** */
-/*                                                                            */
-/*                                                        :::      ::::::::   */
-/*   libft.h                                            :+:      :+:    :+:   */
-/*                                                    +:+ +:+         +:+     */
-/*   By: aromny-w <marvin@42.fr>                    +#+  +:+       +#+        */
-/*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2018/11/26 23:59:40 by aromny-w          #+#    #+#             */
-/*   Updated: 2020/02/12 22:38:00 by aromny-w         ###   ########.fr       */
-/*                                                                            */
-/* ************************************************************************** */
-
 #ifndef LIBFT_H
 # define LIBFT_H
 
@@ -21,7 +9,7 @@
 # include "ft_printf.h"
 # include "ft_dprintf.h"
 
-typedef struct	s_list
+typedef struct s_list
 {
 	void			*content;
 	size_t			content_size;
@@ -51,7 +39,7 @@ char			*ft_strchr(const char *s, int c);
 char			*ft_strrchr(const char *s, int c);
 char			*ft_strstr(const char *haystack, const char *needle);
 char			*ft_strnstr(const char *haystack, const char *needle,
-				size_t len);
+					size_t len);
 char			*ft_strpbrk(const char *s1, const char *s2);
 size_t			ft_strspn(const char *s, const char *accept);
 int				ft_strcmp(const char *s1, const char *s2);
